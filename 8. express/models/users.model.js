@@ -21,7 +21,7 @@ exports.FindUsername = (username) => {
 }
 
 exports.Find = search => {
-  const query = connection.from('users').select('*')
+  const query = connection.from('users').select('id', 'username', 'email', 'age')
 
   if (search) {
     query.where('username', 'like', `%${search}%`)

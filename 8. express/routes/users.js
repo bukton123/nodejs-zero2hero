@@ -1,8 +1,9 @@
 const { Router } = require('express')
 
+const UsersValidate = require('../middlewares/validator/users.validate')
+const TokenMiddleware = require('../middlewares/token.middleware')
 const UsersMiddleware = require('../middlewares/users.middleware')
 const UserModel = require('../models/users.model')
-const TokenMiddleware = require('../middlewares/token.middleware')
 
 const router = new Router()
 
@@ -36,24 +37,33 @@ router.get('/:id',  TokenMiddleware.verifyToken(), async (req, res) => {
 })
 
 // create
-router.post('/',  TokenMiddleware.verifyToken(), UsersMiddleware.checkUser(), async (req, res) => {
-  const { username, password, email, age } = req.body
-  await UserModel.CreateUser(username, password, age, email)
-  res.json({
-    status: 201,
-    message: 'creeated.'
-  }).status(201)
-})
+router.post('/',
+  TokenMiddleware.verifyToken(),
+  UsersValidate.ValidateUserForm(),
+  UsersMiddleware.checkUser(),
+  async (req, res) => {
+    const { username, password, email, age } = req.body
+    await UserModel.CreateUser(username, password, age, email)
+    res.json({
+      status: 201,
+      message: 'creeated.'
+    }).status(201)
+  }
+)
 
 // update
-router.patch('/:id',  TokenMiddleware.verifyToken(), async (req, res) => {
-  const { email, age } = req.body
-  await UserModel.UpdateUser(req.params.id, email, age)
-  res.json({
-    status: 200,
-    message: 'updated.'
-  })
-})
+router.patch('/:id', 
+  TokenMiddleware.verifyToken(),
+  UsersValidate.ValidateUserFormUpdate(), 
+  async (req, res) => {
+    const { email, age } = req.body
+    await UserModel.UpdateUser(req.params.id, email, age)
+    res.json({
+      status: 200,
+      message: 'updated.'
+    })
+  }
+)
 
 // delete
 router.delete('/:id',  TokenMiddleware.verifyToken(), async (req, res) => {
