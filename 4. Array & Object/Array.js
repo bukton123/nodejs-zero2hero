@@ -29,5 +29,12 @@ const d = dataRef.slice(3)
 console.log(dataRef, d)
 
 dataRef.push(6)
+dataRef[6] = 7
 
 console.log(dataRef)
+
+const v1 = [1,2,3]
+const v2 = [4,5,6]
+
+console.log(v1.concat(v2))
+console.log([ ...v1, ...v2, ...[7,8]  ])
