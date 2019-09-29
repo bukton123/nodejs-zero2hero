@@ -27,3 +27,7 @@ const dataRef = [1,2,3,4,5]
 const d = dataRef.slice(3)
 
 console.log(dataRef, d)
+
+dataRef.push(6)
+
+console.log(dataRef)
