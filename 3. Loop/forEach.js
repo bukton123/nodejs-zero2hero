@@ -2,10 +2,14 @@ const arr = new Array(10).fill(1)
 
 console.log(arr)
 
+let total = []
 
 arr.forEach(function(val, i) {
   // console.log(val, i)
+  total.push(val + i)
 }) 
+
+console.log(total)
 
 // bind args
 // arr.forEach(console.log) 
